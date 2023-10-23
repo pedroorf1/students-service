@@ -1,4 +1,4 @@
-import dbclient from "../../prisma/client";
+import { dbClient } from "../../prisma/client";
 import { TAddPerfil, TGetPerfil, TUpdatePerfil } from "../adapters/perfil";
 
 import tools from "../helpers/tools";
@@ -20,7 +20,7 @@ export const add: TAddPerfil = async ({
     userId: parseInt(userId),
   };
 
-  return await dbclient.perfil
+  return await dbClient.perfil
     .create({ data: dataPerfil })
     .then(async (value: any) => {
       const nvalue = await tools.customJson(value);
@@ -36,7 +36,7 @@ export const add: TAddPerfil = async ({
 };
 
 export const get: TGetPerfil = async (userid: string) => {
-  const result = await dbclient.perfil.findFirst({
+  const result = await dbClient.perfil.findFirst({
     where: { userId: parseInt(userid) },
   });
   return await tools.customJson(result);
@@ -54,7 +54,7 @@ export const update: TUpdatePerfil = async (
     birthday,
   };
 
-  return await dbclient.perfil
+  return await dbClient.perfil
     .update({ where: { userId: parseInt(userid) }, data: dataPerfil })
     .then((value: any) => {
       return JSON.parse(value);
