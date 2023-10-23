@@ -10,6 +10,7 @@
     "buld": "tsc",
     "start": "nodemon -r dotenv/config ./dist/index.js",
     "format": "npx prettier --write --ignore-unknown .",
+    "pg": "prisma generate",
     "ts-node:local": "ts-node --esm --experimental-specifier-resolution=node src/index.ts"
   },
   "author": "",
