@@ -1,5 +1,5 @@
-import { login, validate } from "../adapters/authAdapt";
-import { ILogin } from "../types/authTypes";
+import { login, validate } from "../ports/auth";
+import { ILogin } from "../adapters/auth";
 import { TControllers } from "../types/controllersTypes";
 
 export const atuthenticate: TControllers = async (req, res) => {
