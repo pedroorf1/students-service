@@ -1,4 +1,4 @@
-import EStatusReturn from "./statusReturn";
+import EStatusReturn from "../types/statusReturn";
 export type TUserRegister = {
   email: string;
   password: string;

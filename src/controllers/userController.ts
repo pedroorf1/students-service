@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
 import EStatusReturn from "../types/statusReturn";
-import { add, get, update } from "../adapters/userAdapt";
-import { TUserRegister } from "../types/userTypes";
+import { add, get, update } from "../ports/user";
+import { TUserRegister } from "../adapters/user";
 import { TControllers } from "../types/controllersTypes";
 
 export const addOne: TControllers = async (req, res) => {

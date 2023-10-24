@@ -1,8 +1,8 @@
-import dbclient from "../../prisma/client";
-import { TLogin, TValidate, TLogout } from "../types/authTypes";
+import { dbClient } from "../../prisma/client";
+import { TLogin, TValidate, TLogout } from "../adapters/auth";
 import tools from "../helpers/tools";
 export const login: TLogin = async ({ email, password }) => {
-  return dbclient.user
+  return dbClient.user
     .findUnique({
       where: {
         email,
