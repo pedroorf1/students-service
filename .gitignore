@@ -8,6 +8,8 @@ node_modules
 /dist
 # testing
 /coverage
+src/generated
+prisma/generated
 
 # production
 /build

@@ -1,7 +1,7 @@
-import { add, get, update } from "../adapters/perfilAdapt";
+import { add, get, update } from "../ports/perfil";
 import EStatusReturn from "../types/statusReturn";
 
-import { IPerfilPayload, IPerfilPayloadUpdate } from "../types/perfilTypes";
+import { IPerfilPayload, IPerfilPayloadUpdate } from "../adapters/perfil";
 import { TControllers } from "../types/controllersTypes";
 
 //CREATE

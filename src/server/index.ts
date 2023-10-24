@@ -1,14 +1,27 @@
 import express from "express";
 const server = express();
+import bodyParser from "body-parser";
+import cors from "cors";
 
-import userRouter from "../routers/userRouter";
-import authRouter from "../routers/authRouter";
-import homeRouter from "../routers/homeRouter";
-import perfilRouter from "../routers/perfilRouter";
+import routers from "../routers";
 
-server.use("/", userRouter);
-server.use("/", authRouter);
-server.use("/", homeRouter);
-server.use("/", perfilRouter);
+server.use("/api/v1", routers);
+
+const PORT = process.env.PORT || 3500;
+let server_path = process.env.SERVER_PATH || "http://localhost";
+if (server_path === "http://localhost") {
+  server_path = `${server_path}:${PORT}`;
+}
+
+server.use(express.json({ limit: "10mb" }));
+const corsOptions = {
+  origin: server_path,
+  optionsSuccessStatus: 200, // for some legacy browsers
+};
+
+server.use(cors(corsOptions));
+
+server.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
+server.use(bodyParser.json({ limit: "10mb", type: "application/json" }));
 
 export default server;

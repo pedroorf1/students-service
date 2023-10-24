@@ -1,5 +1,5 @@
-import dbclient from "../../prisma/client";
-import { TAddUser, TGetUser, TUpdateUser } from "../types/userTypes";
+import { dbClient } from "../../prisma/client";
+import { TAddUser, TGetUser, TUpdateUser } from "../adapters/user";
 import tools from "../helpers/tools";
 
 export const add: TAddUser = async ({ email, password, confirmepassword }) => {
@@ -28,7 +28,7 @@ export const add: TAddUser = async ({ email, password, confirmepassword }) => {
   }
 
   const createPassword = await tools.createPassword(String(password));
-  return dbclient.user
+  return await dbClient.user
     .create({
       data: {
         email,
@@ -37,6 +37,7 @@ export const add: TAddUser = async ({ email, password, confirmepassword }) => {
     })
     .then((value: any) => {
       value.password = undefined;
+      value.id = value.id.toString();
       return {
         status: true,
         data: value,
@@ -53,7 +54,7 @@ export const add: TAddUser = async ({ email, password, confirmepassword }) => {
 };
 
 export const get: TGetUser = async (_id: string) => {
-  return dbclient.user
+  return await dbClient.user
     .findUnique({ where: { id: parseInt(_id) } })
     .then((value: any) => {
       return value;
@@ -64,7 +65,7 @@ export const get: TGetUser = async (_id: string) => {
 };
 
 export const getByEmail: TGetUser = async (email: string) => {
-  return dbclient.user
+  return await dbClient.user
     .findUnique({ where: { email } })
     .then((value: any) => {
       return value;
@@ -75,7 +76,7 @@ export const getByEmail: TGetUser = async (email: string) => {
 };
 
 export const update: TUpdateUser = async ({ _id, password }) => {
-  return dbclient.user
+  return await dbClient.user
     .update({
       where: { id: parseInt(_id) },
       data: { password: password },
