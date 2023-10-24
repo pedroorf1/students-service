@@ -15,7 +15,13 @@ module.exports = {
     },
   },
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.{ts|tsx}?$": [
+      "ts-jest",
+      {
+        babel: true,
+        tsConfig: "tsconfig.json",
+      },
+    ],
   },
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],

@@ -1,32 +1,12 @@
-import bodyParser from "body-parser";
-import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import server from "./server";
 dotenv.config();
 
-let server_path = process.env.SERVER_PATH || "http://localhost";
 const app = express();
-
 app.use(server);
-server.use(express.json({ limit: "10mb" }));
-const corsOptions = {
-  origin: server_path,
-  optionsSuccessStatus: 200, // for some legacy browsers
-};
 
-server.use(cors(corsOptions));
-
-server.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
-server.use(bodyParser.json({ limit: "10mb", type: "application/json" }));
-
-const PORT = process.env.PORT || 3500;
-
-if (server_path === "http://localhost") {
-  server_path = `${server_path}:${PORT}`;
-}
-
-server.use(
+app.use(
   (
     error: any,
     req: express.Request,
@@ -40,7 +20,7 @@ server.use(
     res.json({ message: error.message });
   }
 );
-
+const PORT = process.env.PORT || 3500;
 app.listen(PORT, () => {
-  console.info(`app started on ${server_path}`);
+  console.info(`app started`);
 });
