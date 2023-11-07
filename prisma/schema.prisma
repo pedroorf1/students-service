@@ -23,7 +23,6 @@ model User {
   contact        Contact[]        @relation("contact")
   degree         Degree[]         @relation("degree")
   skills         Skills[]         @relation("skills")
-  experiences    Experiences[]    @relation("experiences")
   projects       Projects[]       @relation("projects")
   referecePrices ReferecePrices[] @relation("referecePrices")
   refereces      Refereces[]      @relation("refereces")
@@ -31,14 +30,15 @@ model User {
 }
 
 model Perfil {
-  id         BigInt    @id @default(autoincrement())
-  photo      String?
-  name       String?
-  secondname String?
-  socialname String?
-  birthday   DateTime?
-  userId     BigInt?   @unique
-  user       User?     @relation("perfil", fields: [userId], references: [id])
+  id               BigInt             @id @default(autoincrement())
+  photo            String?
+  name             String?
+  secondname       String?
+  socialname       String?
+  birthday         DateTime?
+  userId           BigInt?            @unique
+  user             User?              @relation("perfil", fields: [userId], references: [id])
+  InstituitionUser InstituitionUser[]
 }
 
 model Addres {
@@ -49,6 +49,9 @@ model Addres {
   country    String?
   userId     BigInt?
   user       User?   @relation("address", fields: [userId], references: [id])
+
+  InstituitionUser   InstituitionUser? @relation(fields: [instituitionUserId], references: [id])
+  instituitionUserId BigInt?
 }
 
 model Contact {
@@ -58,6 +61,9 @@ model Contact {
   another String?
   userId  BigInt?
   user    User?   @relation("contact", fields: [userId], references: [id])
+
+  InstituitionUser   InstituitionUser? @relation(fields: [instituitionUserId], references: [id])
+  instituitionUserId BigInt?
 }
 
 //SKILLS
@@ -84,16 +90,6 @@ model Skills {
   description String?
   userId      BigInt?
   user        User?   @relation("skills", fields: [userId], references: [id])
-}
-
-model Experiences {
-  id        BigInt    @id @default(autoincrement())
-  company   String
-  start     DateTime
-  end       DateTime?
-  iscurrent Boolean?
-  userId    BigInt?
-  user      User?     @relation("experiences", fields: [userId], references: [id])
 }
 
 model Projects {
@@ -129,4 +125,39 @@ model UserPoints {
   value  BigInt
   userId BigInt?
   user   User?   @relation("userPoints", fields: [userId], references: [id])
+}
+
+model Institutions {
+  id         BigInt  @id @default(autoincrement())
+  name       String
+  inep       String
+  cnpj       String
+  address    String
+  complement String
+  state      String
+  country    String
+  phone      String
+  email      String
+  site       String?
+  facebook   String?
+  instagram  String?
+  twitter    String?
+  linkedin   String?
+  youtube    String?
+  tiktok     String?
+  whatsapp   String?
+  telegram   String?
+  manager    BigInt?
+}
+
+model InstituitionUser {
+  id       BigInt    @id @default(autoincrement())
+  email    String    @unique
+  password String
+  posetion String
+  Addres   Addres[]
+  Contact  Contact[]
+  perfilId BigInt?
+
+  Perfil Perfil? @relation(fields: [perfilId], references: [id])
 }
