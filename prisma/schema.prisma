@@ -158,6 +158,5 @@ model InstituitionUser {
   Addres   Addres[]
   Contact  Contact[]
   perfilId BigInt?
-
-  Perfil Perfil? @relation(fields: [perfilId], references: [id])
+  Perfil   Perfil?   @relation(fields: [perfilId], references: [id])
 }
