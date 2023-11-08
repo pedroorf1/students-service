@@ -46,7 +46,7 @@ export const add: TAddInstituition = async ({
     tiktok,
     whatsapp,
     telegram,
-    manager,
+    manager: BigInt(manager),
   };
 
   return await dbClient.institutions
