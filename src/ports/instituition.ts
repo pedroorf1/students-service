@@ -6,8 +6,48 @@ import {
 
 import tools from "../helpers/tools";
 
-export const add: TAddInstituition = async ({ ...IInstituitionPayload }) => {
-  const dataInstituition = { ...IInstituitionPayload };
+export const add: TAddInstituition = async ({
+  name,
+  inep,
+  cnpj,
+  address,
+  complement,
+  state,
+  country,
+  phone,
+  email,
+  site,
+  facebook,
+  instagram,
+  twitter,
+  linkedin,
+  youtube,
+  tiktok,
+  whatsapp,
+  telegram,
+  manager,
+}) => {
+  const dataInstituition = {
+    name,
+    inep,
+    cnpj,
+    address,
+    complement,
+    state,
+    country,
+    phone,
+    email,
+    site,
+    facebook,
+    instagram,
+    twitter,
+    linkedin,
+    youtube,
+    tiktok,
+    whatsapp,
+    telegram,
+    manager,
+  };
 
   return await dbClient.institutions
     .create({ data: dataInstituition })
