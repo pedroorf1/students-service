@@ -4,5 +4,5 @@ import { routeValidade } from "../helpers/service/routevalidade.midware";
 
 const router = express();
 
-router.post("/institituition", routeValidade, institituition.addOne);
+router.post("/instituition", routeValidade, institituition.addOne);
 export default router;

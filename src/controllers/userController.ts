@@ -6,7 +6,7 @@ import { TUserRegister } from "../adapters/user";
 import { TControllers } from "../types/controllersTypes";
 
 export const addOne: TControllers = async (req, res) => {
-  if (!req?.query) {
+  if (!req?.body) {
     res.send({
       data: [],
       message: "Dados inválidos!",
@@ -16,9 +16,9 @@ export const addOne: TControllers = async (req, res) => {
   }
 
   const data: TUserRegister = {
-    email: String(req?.query.email),
-    password: String(req?.query.password),
-    confirmepassword: String(req?.query.confirmepassword),
+    email: String(req?.body.email),
+    password: String(req?.body.password),
+    confirmepassword: String(req?.body.confirmepassword),
   };
 
   const result = await add(data);
@@ -40,7 +40,7 @@ export const addOne: TControllers = async (req, res) => {
 };
 
 export const getOne: TControllers = async (req, res) => {
-  const _id = String(req?.query._id);
+  const _id = String(req?.body._id);
 
   if (!_id) {
     res.send({

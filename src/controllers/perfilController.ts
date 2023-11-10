@@ -7,13 +7,13 @@ import { TControllers } from "../types/controllersTypes";
 //CREATE
 export const addOne: TControllers = async (req, res) => {
   const data: IPerfilPayload = {
-    userId: String(req?.query.userid || null).trim(),
-    name: String(req?.query.name || null).trim(),
-    secondname: String(req?.query.secondname || null).trim(),
-    socialname: String(req?.query.socialname || null).trim(),
-    photo: String(req?.query.photo || null).trim() || null,
-    birthday: req?.query.birthday
-      ? new Date(String(req?.query.birthday).trim())
+    userId: String(req?.body.userid || null).trim(),
+    name: String(req?.body.name || null).trim(),
+    secondname: String(req?.body.secondname || null).trim(),
+    socialname: String(req?.body.socialname || null).trim(),
+    photo: String(req?.body.photo || null).trim() || null,
+    birthday: req?.body.birthday
+      ? new Date(String(req?.body.birthday).trim())
       : null,
   };
 
@@ -49,14 +49,14 @@ export const addOne: TControllers = async (req, res) => {
 };
 //UPDATE
 export const updateOne: TControllers = async (req, res) => {
-  const userid = String(req?.query.userid || null).trim();
+  const userid = String(req?.body.userid || null).trim();
   const data: IPerfilPayloadUpdate = {
-    name: String(req?.query.name || null).trim(),
-    secondname: String(req?.query.secondname || null).trim(),
-    socialname: String(req?.query.socialname || null).trim(),
-    photo: String(req?.query.photo || null).trim() || null,
-    birthday: req?.query.birthday
-      ? new Date(String(req?.query.birthday).trim())
+    name: String(req?.body.name || null).trim(),
+    secondname: String(req?.body.secondname || null).trim(),
+    socialname: String(req?.body.socialname || null).trim(),
+    photo: String(req?.body.photo || null).trim() || null,
+    birthday: req?.body.birthday
+      ? new Date(String(req?.body.birthday).trim())
       : null,
   };
 
@@ -94,7 +94,7 @@ export const updateOne: TControllers = async (req, res) => {
 
 //FINDONE
 export const getOne: TControllers = async (req, res) => {
-  const _id = String(req?.query.userid);
+  const _id = String(req?.body.userid);
 
   if (!_id) {
     res.send({
@@ -104,11 +104,20 @@ export const getOne: TControllers = async (req, res) => {
     });
   }
 
-  await get(_id).then(value => {
-    res.send({
-      data: value,
-      message: "Perfil encontrado!",
-      status: EStatusReturn.Success,
+  await get(_id)
+    .catch(Error => {
+      res.send({
+        data: [],
+        message: (Error.message = "Dados não encontrados"),
+        status: EStatusReturn.Error,
+      });
+      return;
+    })
+    .then(value => {
+      res.send({
+        data: value,
+        message: "Perfil encontrado!",
+        status: EStatusReturn.Success,
+      });
     });
-  });
 };

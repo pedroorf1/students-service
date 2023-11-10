@@ -5,56 +5,52 @@ import { TControllers } from "../types/controllersTypes";
 
 //CREATE
 export const addOne: TControllers = async (req, res) => {
+  console.log("req: ", req.body);
   const data = {
-    userId: String(req?.query.userid || null).trim(),
-    name: String(req?.query.name || null).trim(),
-    inep: String(req?.query.inep || null).trim(),
-    cnpj: String(req?.query.cnpj || null).trim(),
-    address: String(req?.query.address || null).trim(),
-    complement: String(req?.query.complement || null).trim(),
-    state: String(req?.query.state || null).trim(),
-    country: String(req?.query.country || null).trim(),
-    phone: String(req?.query.phone || null).trim(),
-    email: String(req?.query.email || null).trim(),
-    site: String(req?.query.site || null).trim(),
-    facebook: String(req?.query.facebook || null).trim(),
-    instagram: String(req?.query.instagram || null).trim(),
-    twitter: String(req?.query.twitter || null).trim(),
-    linkedin: String(req?.query.linkedin || null).trim(),
-    youtube: String(req?.query.youtube || null).trim(),
-    tiktok: String(req?.query.toktok || null).trim(),
-    whatsapp: String(req?.query.whatsapp || null).trim(),
-    telegram: String(req?.query.telegram || null).trim(),
-    manager: String(req?.query.manager || null).trim(),
+    userId: String(req?.body.userid || null).trim(),
+    name: String(req?.body.name || null).trim(),
+    inep: String(req?.body.inep || null).trim(),
+    cnpj: String(req?.body.cnpj || null).trim(),
+    address: String(req?.body.address || null).trim(),
+    complement: String(req?.body.complement || null).trim(),
+    state: String(req?.body.state || null).trim(),
+    country: String(req?.body.country || null).trim(),
+    phone: String(req?.body.phone || null).trim(),
+    email: String(req?.body.email || null).trim(),
+    site: String(req?.body.site || null).trim(),
+    facebook: String(req?.body.facebook || null).trim(),
+    instagram: String(req?.body.instagram || null).trim(),
+    twitter: String(req?.body.twitter || null).trim(),
+    linkedin: String(req?.body.linkedin || null).trim(),
+    youtube: String(req?.body.youtube || null).trim(),
+    tiktok: String(req?.body.toktok || null).trim(),
+    whatsapp: String(req?.body.whatsapp || null).trim(),
+    telegram: String(req?.body.telegram || null).trim(),
+    manager: String(req?.body.manager || null).trim(),
   };
 
-  for (const [key, value] of Object.entries(data)) {
-    console.clear();
-    if (value) {
-      break;
+  try {
+    const result = await add(data);
+    if (result?.status == false) {
+      res.send({
+        data: [],
+        message: result.message,
+        status: EStatusReturn.Error,
+      });
+      return;
     }
+
+    res.send({
+      data: result.data,
+      message: "Instituicao cadastrada adicionado!",
+      status: EStatusReturn.Success,
+    });
+  } catch (Error) {
     res.send({
       data: [],
-      message: "Dados inválidos!",
+      message: (Error.message = "Existem dados obrigatorios não preenchidos!"),
       status: EStatusReturn.Error,
     });
     return;
   }
-
-  const result = await add(data);
-  if (result?.status == false) {
-    res.send({
-      data: [],
-      message: result.message,
-      status: EStatusReturn.Error,
-    });
-    return;
-  }
-
-  res.send({
-    data: result.data,
-    message: "Perfil adicionado!",
-    status: EStatusReturn.Success,
-  });
-  return;
 };
