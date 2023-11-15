@@ -37,29 +37,29 @@ export const add: TAddInstituition = async ({
     country,
     phone,
     email,
-    site,
-    facebook,
-    instagram,
-    twitter,
-    linkedin,
-    youtube,
-    tiktok,
-    whatsapp,
-    telegram,
-    manager: BigInt(manager),
+    site: site ? site : null,
+    facebook: facebook ? facebook : null,
+    instagram: instagram ? instagram : null,
+    twitter: twitter ? twitter : null,
+    linkedin: linkedin ? linkedin : null,
+    youtube: youtube ? youtube : null,
+    tiktok: tiktok ? tiktok : null,
+    whatsapp: whatsapp ? whatsapp : null,
+    telegram: telegram ? telegram : null,
+    manager: manager ? manager : null,
   };
-
-  return await dbClient.institutions
-    .create({ data: dataInstituition })
-    .then(async (value: any) => {
-      const nvalue = await tools.customJson(value);
-      return JSON.stringify(nvalue);
-    })
-    .catch((err: any) => {
-      return {
-        status: false,
-        error: err,
-        message: "Houve erro ao cadastrar a instituição",
-      };
-    });
+  try {
+    return await dbClient.institutions
+      .create({ data: dataInstituition })
+      .then(async (value: any) => {
+        const nvalue = await tools.customJson(value);
+        return JSON.stringify(nvalue);
+      });
+  } catch (Error) {
+    return {
+      status: false,
+      error: Error.message,
+      message: "Houve erro ao cadastrar a instituição",
+    };
+  }
 };

@@ -17,7 +17,7 @@ export type IInstituitionPayload = {
   tiktok?: string;
   whatsapp?: string;
   telegram?: string;
-  manager?: string;
+  manager?: bigint;
 };
 
 export type IInstituitionPayloadUpdate = {
@@ -32,7 +32,7 @@ export type IInstituitionPayloadUpdate = {
   tiktok?: string;
   whatsapp?: string;
   telegram?: string;
-  manager?: string;
+  manager?: bigint;
 };
 
 export type TAddInstituition = ({

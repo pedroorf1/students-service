@@ -7,7 +7,6 @@ import { TControllers } from "../types/controllersTypes";
 export const addOne: TControllers = async (req, res) => {
   console.log("req: ", req.body);
   const data = {
-    userId: String(req?.body.userid || null).trim(),
     name: String(req?.body.name || null).trim(),
     inep: String(req?.body.inep || null).trim(),
     cnpj: String(req?.body.cnpj || null).trim(),
@@ -23,10 +22,10 @@ export const addOne: TControllers = async (req, res) => {
     twitter: String(req?.body.twitter || null).trim(),
     linkedin: String(req?.body.linkedin || null).trim(),
     youtube: String(req?.body.youtube || null).trim(),
-    tiktok: String(req?.body.toktok || null).trim(),
+    tiktok: String(req?.body.tiktok || null).trim(),
     whatsapp: String(req?.body.whatsapp || null).trim(),
     telegram: String(req?.body.telegram || null).trim(),
-    manager: String(req?.body.manager || null).trim(),
+    manager: req?.body.manager ? BigInt(req?.body.manager) : null,
   };
 
   try {
@@ -42,7 +41,7 @@ export const addOne: TControllers = async (req, res) => {
 
     res.send({
       data: result.data,
-      message: "Instituicao cadastrada adicionado!",
+      message: "Instituicao cadastrada!",
       status: EStatusReturn.Success,
     });
   } catch (Error) {
